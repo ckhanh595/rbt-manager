@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RbtmanagerApplication {
+public class RbtManagerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RbtmanagerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RbtManagerApplication.class, args);
+    }
 
 }
