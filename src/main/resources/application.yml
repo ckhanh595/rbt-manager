@@ -14,3 +14,7 @@ spring.security:
   user:
     name: admin
     password: admin123
+
+mqtt:
+  broker: tcp://localhost:1883
+  client-id: rbt-manager
