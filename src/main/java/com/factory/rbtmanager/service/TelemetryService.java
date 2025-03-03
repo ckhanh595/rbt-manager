@@ -20,7 +20,8 @@ import java.util.Optional;
 public class TelemetryService {
 
     private static final Logger logger = LoggerFactory.getLogger(TelemetryService.class);
-    private static final String DEFAULT_TELEMETRY_TOPIC = "fleet/robot/telemetry";
+    private static final String DEFAULT_TELEMETRY_TOPIC = "robot/command";
+    private static final String ROBOT_STATUS_TOPIC = "robot/status";
 
     private final MqttService mqttService;
     private final ObjectMapper objectMapper;
@@ -42,7 +43,7 @@ public class TelemetryService {
     @PostConstruct
     public void init() {
         try {
-            mqttService.subscribe(DEFAULT_TELEMETRY_TOPIC, message -> {
+            mqttService.subscribe(ROBOT_STATUS_TOPIC, message -> {
                 var payload = new String(message.getPayload());
                 logger.info("Received telemetry from {}: {}", DEFAULT_TELEMETRY_TOPIC, payload);
 
@@ -54,7 +55,7 @@ public class TelemetryService {
                 }
             });
 
-            logger.info("Subscribed to topic: {}", DEFAULT_TELEMETRY_TOPIC);
+            logger.info("Subscribed to topic: {}", ROBOT_STATUS_TOPIC);
         } catch (MqttException e) {
             logger.error("Failed to subscribe to telemetry topic: {}", e.getMessage());
         } catch (Exception e) {
