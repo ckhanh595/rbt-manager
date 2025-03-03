@@ -11,7 +11,7 @@ public class MqttConfig {
 
     @Bean
     public MqttClient mqttClient() throws MqttException {
-        var broker = "tcp://10.0.2.2:1883";  // Connect from VM to host
+        var broker = "tcp://localhost:1883";
         var clientId = "RobotManager_" + System.currentTimeMillis();
         var client = new MqttClient(broker, clientId);
         var options = new MqttConnectOptions();

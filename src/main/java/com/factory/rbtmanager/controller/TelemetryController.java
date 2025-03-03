@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/telemetry")
 @RequiredArgsConstructor
+@RequestMapping("/api/telemetry")
 public class TelemetryController {
 
     private final TelemetryService telemetryService;

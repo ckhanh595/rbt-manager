@@ -6,20 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Optional;
 
-
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TelemetryService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TelemetryService.class);
     private static final String DEFAULT_TELEMETRY_TOPIC = "robot/command";
     private static final String ROBOT_STATUS_TOPIC = "robot/status";
 
@@ -33,9 +31,9 @@ public class TelemetryService {
             var payload = objectMapper.writeValueAsString(request.getData());
 
             mqttService.publish(topic, payload);
-            logger.info("Published telemetry to {}: {}", topic, payload);
+            log.info("Published telemetry to {}: {}", topic, payload);
         } catch (MqttException e) {
-            logger.error("Failed to publish telemetry: {}", e.getMessage());
+            log.error("Failed to publish telemetry: {}", e.getMessage());
         }
     }
 
@@ -45,21 +43,22 @@ public class TelemetryService {
         try {
             mqttService.subscribe(ROBOT_STATUS_TOPIC, message -> {
                 var payload = new String(message.getPayload());
-                logger.info("Received telemetry from {}: {}", DEFAULT_TELEMETRY_TOPIC, payload);
+                log.info("Received telemetry from {}: {}", DEFAULT_TELEMETRY_TOPIC, payload);
 
                 try {
                     var telemetryData = objectMapper.readValue(payload, Map.class);
-                    logger.info("Telemetry data: {}", telemetryData);
+                    log.info("Telemetry data: {}", telemetryData);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
             });
 
-            logger.info("Subscribed to topic: {}", ROBOT_STATUS_TOPIC);
+            log.info("Subscribed to topic: {}", ROBOT_STATUS_TOPIC);
         } catch (MqttException e) {
-            logger.error("Failed to subscribe to telemetry topic: {}", e.getMessage());
+            log.error("Failed to subscribe to telemetry topic: {}", e.getMessage());
         } catch (Exception e) {
-            logger.error("Failed to process telemetry: {}", e.getMessage());
+            log.error("Failed to process telemetry: {}", e.getMessage());
         }
     }
 }
+
