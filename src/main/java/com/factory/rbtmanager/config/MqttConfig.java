@@ -11,11 +11,12 @@ public class MqttConfig {
 
     @Bean
     public MqttClient mqttClient() throws MqttException {
-        var broker = "tcp://localhost:1883";
-        var clientId = "RobotManager_" + System.currentTimeMillis();
+        var broker = "tcp://192.168.110.61:1883";
+        var clientId = "RobotManager";
+//        var clientId = "RobotManager_" + System.currentTimeMillis();
         var client = new MqttClient(broker, clientId);
         var options = new MqttConnectOptions();
-        options.setCleanSession(true); // Fresh session on connect
+//        options.setCleanSession(true); // Fresh session on connect
         options.setAutomaticReconnect(true); // Auto-reconnect if connection is lost
         options.setConnectionTimeout(10);    // Timeout in seconds
         options.setKeepAliveInterval(60);    // Heartbeat check

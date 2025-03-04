@@ -18,7 +18,7 @@ import java.util.Optional;
 @Slf4j
 public class TelemetryService {
 
-    private static final String DEFAULT_TELEMETRY_TOPIC = "robot/command";
+    private static final String DEFAULT_TELEMETRY_TOPIC = "robot/commands";
     private static final String ROBOT_STATUS_TOPIC = "robot/status";
 
     private final MqttService mqttService;
